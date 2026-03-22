@@ -26,11 +26,30 @@ async function bootstrap() {
 
   SwaggerModule.setup('api-docs', app, document);
 
+  console.log('Frontend URL from env:', process.env.FRONTEND_URL);
+
   app.enableCors({
-    origin: [process.env.FRONTEND_URL, 'http://localhost:5173'].filter(Boolean),
+    origin: (origin, callback) => {
+      // Allow if no origin (like mobile apps/curl) or if it matches our allowed list
+      const allowedOrigins = [
+        process.env.FRONTEND_URL,
+        process.env.FRONTEND_URL?.replace(/\/$/, ''), // Remove trailing slash if any
+        // 'http://localhost:5173',
+        'http://localhost:3000',
+      ].filter(Boolean);
+
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        console.error(`CORS Blocked: Origin ${origin} not in allowed list:`, allowedOrigins);
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    allowedHeaders: 'Content-Type, Accept, Authorization',
   });
-  
+
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

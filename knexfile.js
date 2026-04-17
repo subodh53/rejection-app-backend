@@ -20,7 +20,7 @@ module.exports = {
   production: {
     client: 'pg',
     connection: {
-      connectionString: process.env.DATABASE_URL,
+      connectionString: process.env.DATABASE_URL_SUPABASE,
       ssl: { rejectUnauthorized: false },
     },
     migrations: {

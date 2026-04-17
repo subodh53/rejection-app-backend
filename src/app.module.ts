@@ -13,9 +13,10 @@ import { EntriesModule } from './entries/entries.module';
 import { ReportsModule } from './reports/reports.module';
 import { AuditLogsModule } from './audit-logs/audit-logs.module';
 import { DatabaseModule } from './database/database.module';
+import { MasterUploadModule } from './master-upload/master-upload.module';
 
 @Module({
-  imports: [AuthModule, UsersModule, PartsModule, CategoriesModule, StagesModule, DefectsModule, ProductionModule, RejectionsModule, EntriesModule, ReportsModule, AuditLogsModule, DatabaseModule],
+  imports: [AuthModule, UsersModule, PartsModule, CategoriesModule, StagesModule, DefectsModule, ProductionModule, RejectionsModule, EntriesModule, ReportsModule, AuditLogsModule, DatabaseModule, MasterUploadModule],
   controllers: [AppController],
   providers: [AppService],
 })
